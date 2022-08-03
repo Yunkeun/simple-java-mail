@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  database:
+    image: mysql:5.7
+    container_name: mail-mysqldb
+    env_file:
+      - "./.env"
+    command:
+      [
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+      ]
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    
+    networks:
+      - network-tier
+    platform: linux/amd64
+
+networks:
+  network-tier:
+    external: true
+volumes:
+  mysql-data:
