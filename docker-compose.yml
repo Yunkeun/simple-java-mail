@@ -19,6 +19,13 @@ services:
     networks:
       - network-tier
     platform: linux/amd64
+  
+  redis:
+    image: redis:alpine
+    command: redis-server --port 6379
+    container_name: mail-redis
+    ports:
+      - "6379:6379"
 
 networks:
   network-tier:
