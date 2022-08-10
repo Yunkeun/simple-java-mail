@@ -4,6 +4,8 @@ spring:
   profiles:
     include:
       - db
+      - mail
+
   redis:
     host: redis
     port: 6379
