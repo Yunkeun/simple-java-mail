@@ -1,22 +1,35 @@
 package com.yoonveloping.simplemail.domain;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
+@Entity
 public class Mail {
+
 
     private static final int CODE_SIZE = 6;
 
-    private final String address;
-    private final String randomCode;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column
+    private String address;
+    @Column
     private Boolean isAuth;
+    @Column
+    private String time;
 
     public Mail(String address) {
         this.address = address;
-        this.randomCode = makeRandomCode();
         this.isAuth = false;
+        this.time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    private String makeRandomCode() {
+    public Mail() {
+    }
+
+    public String makeRandomCode() {
         Random random = new Random();
         StringBuilder builder = new StringBuilder();
         while (builder.length() < CODE_SIZE) {
@@ -25,19 +38,23 @@ public class Mail {
         return builder.toString();
     }
 
-    public void setMailTrue() {
-        this.isAuth = true;
+    public Long getId() {
+        return id;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public String getRandomCode() {
-        return randomCode;
-    }
-
     public Boolean getAuth() {
         return isAuth;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setMailTrue() {
+        this.isAuth = true;
     }
 }
